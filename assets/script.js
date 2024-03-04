@@ -89,6 +89,7 @@ function checkAnswer(choice) { // function for checking answer, initiated by cli
         showQuestion(); // ...and run showQuestion() function
     } else { // else, if the currentQuestionIndex reaches the length of the questions array... 
         endQuiz(); // ...then run the endQuiz function
+        startButton.classList.remove('hide'); // remove class = 'hide' from startButton to show the element
     }
 }
 
@@ -146,4 +147,5 @@ function saveHighScore(initials, score) { // function to save high scores to loc
     highScores.splice(5); // after sorting, removes elements from index 5 onward, keeping the maximum number of entries at five.
 
     localStorage.setItem('highScores', JSON.stringify(highScores)); // save item in local storage as a string. value must be a string to be stored locally.
+
 }
