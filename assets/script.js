@@ -33,19 +33,19 @@ const questions = [ // array containing objects. each object contains a question
         answer: "//"
     },
     {
-        question: "What does HTML stand for?",
-        choices: ["Hyper Text Markup Language", "Hyperlinks and Text Markup Language", "Home Tool Markup Language", "Hyperlink Text Markdown Language"],
-        answer: "Hyper Text Markup Language"
+        question: "What does the DOM stand for?",
+        choices: ["Document Order Model", "Document Object Model", "Data Oriented Module", "Dynamic Object Manipulation"],
+        answer: "Document Object Model"
     },
     {
-        question: "Which of the following is NOT a JavaScript data type?",
-        choices: ["string", "boolean", "tuple", "number"],
-        answer: "tuple"
+        question: "What does the typeof operator in JavaScript return for the value null?",
+        choices: ["object", "null", "undefined", "string"],
+        answer: "object"
     },
     {
-        question: "Which symbol is used for single-line comments in JavaScript?",
-        choices: ["//", "/*", "<!--", "*/"],
-        answer: "//"
+        question: "Which of the following methods is used to add a new element at the end of an array?",
+        choices: ["push()", "pop()", "shift()", "splice()"],
+        answer: "push()"
     }
 ]; // array containing objects. each object contains a question, four choices as an array, and one correct answer.
 
@@ -54,6 +54,10 @@ startButton.addEventListener('click', startQuiz); // targeting startButton. star
 
 
 function startQuiz() { // initiated by 'click' event.
+    currentQuestionIndex = 0; // reset questions index
+    timeLeft = 60; // reset timeLeft
+    endContainer.classList.add('hide'); //hide 
+    questionContainer.classList.remove('hide'); //show
     startButton.classList.add('hide'); // add class='hide' to startButton to hide the HTML element.
     questionContainer.classList.remove('hide'); // remove class='hide' from questionContainer to reveal the HTML element.
     showQuestion(); // initiate showQuestion function.
@@ -64,19 +68,23 @@ function startQuiz() { // initiated by 'click' event.
 function showQuestion() {
     const question = questions[currentQuestionIndex]; // grabbing question from 'questions' array using index number from currentQuestionIndex var
     questionElement.innerText = question.question; // populate questionElement with the text of the current question as declared ^
+
+    document.querySelectorAll('.btn').forEach(button => { // select all buttons
+        button.removeEventListener('click', checkAnswer); // remove 'click' checkAnswer event listeners
+    });
+
     question.choices.forEach((choice, index) => { // loop through the choices index of each question. choice represents current element processed. gathering index of each choice.
-        const button = document.getElementsByClassName('btn')[index]; // target a button element and index it.
+        const button = document.getElementsByClassName('btn')[index]; // define variable. target a button element and index it.
         button.innerText = choice; // populate targeted button with current choice being processed by loop.
-        button.addEventListener('click', () => { // event listen for click on targeted button
-            checkAnswer(choice); // click event sends selected choice to checkAnswer function
-        });
+        button.addEventListener('click', checkAnswer); // add event listener to checkAnswer on click.
     });
 }
 
-// Function to check answer
-function checkAnswer(choice) { // function for checking answer, initiated by click event.
-    if (choice === questions[currentQuestionIndex].answer) { // if selected choice is absolutely equal to the current question object's value for answer, proceed.
-        
+function checkAnswer(event) { // function event to check user's answer
+    const choice = event.target.innerText; // Get the text of the clicked button
+
+    if (choice === questions[currentQuestionIndex].answer) { // if selected choice is absolutely equal to the current question object's value for answer, do nothing.
+
     } else { // if selected choice is not absolutely equal to current question object's value for answer...
         timeLeft -= 10; // ...subtract 10 seconds from timeLeft
         if (timeLeft < 0) { // if timeLeft gets to 0 or below...
@@ -85,11 +93,10 @@ function checkAnswer(choice) { // function for checking answer, initiated by cli
     }
 
     if (currentQuestionIndex < questions.length - 1) { // if currentQuestionIndex is less than the length of the questions array - 1...
-        currentQuestionIndex++; // ...then increment index of questions array (move to the next question)...       
+        currentQuestionIndex++; // ...then increment index of questions array (move to the next question)...
         showQuestion(); // ...and run showQuestion() function
     } else { // else, if the currentQuestionIndex reaches the length of the questions array... 
         endQuiz(); // ...then run the endQuiz function
-        startButton.classList.remove('hide'); // remove class = 'hide' from startButton to show the element
     }
 }
 
@@ -103,6 +110,7 @@ function updateTimer() { // function to update timer
 
 function endQuiz() { // function to end quiz
     clearInterval(timerInterval); // calls the clearInterval function to stop the timerInterval value from updating
+    startButton.classList.remove('hide'); // remove class = 'hide' from startButton to show the element
     questionContainer.classList.add('hide'); // add class = 'hide' to questionContainer to hide the questions
     endContainer.classList.remove('hide'); // remove class = 'hide' from endContainer to show completion message and final score
     finalScoreElement.innerText = timeLeft; // populate finalScoreElement with value of timeLeft upon endQuiz function initiation
