@@ -1,73 +1,118 @@
+/* palette */
+
+:root {
+    --pcolor: cyan;
+    --scolor: magenta;
+    --tcolor: yellow;
+    --dpcolor: darkcyan;
+    --dscolor: darkmagenta;
+}
+
+/*use class = 'hide' to hide elements*/
+.hide {
+    display: none;
+}
+
+/*all body elements*/
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    font-family: 'Rubik', Arial, sans-serif;
+    background-color: none;
     margin: 0;
     padding: 0;
 }
 
+/*container for body elements*/
 .container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: var(--pcolor);
+    box-shadow: 0 0 50px var(--tcolor);
     border-radius: 5px;
     text-align: center;
+    z-index: 1;
 }
 
+/*extra container for second shadow color*/
+.style-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding-top: 0;
+    background-color: none;
+    box-shadow: 0 0 100px var(--scolor);
+    border-radius: 5px;
+}
+
+.container:hover {
+    box-shadow: 0 0 50px var(--scolor);
+}
+
+.style-container:hover {
+    box-shadow: 0 0 100px var(--tcolor);
+}
+
+/*JavaScript Quiz*/
 h1 {
-    font-family: 'Rubik' !important;
-    color: #333;
+    color: lightcyan;
+    text-shadow: 2px 2px var(--scolor);
 }
 
+/*buttons*/
 button {
     padding: 10px 20px;
     font-size: 16px;
-    background-color: #007bff;
-    font-family: 'Rubik' !important;
-    color: #fff;
+    background-color: var(--dpcolor);
+    color: lightcyan;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
 }
-
 button:hover {
-    background-color: #0056b3;
+    background-color: var(--scolor);
 }
 
-.hide {
-    display: none;
-}
-
+/*element containers*/
 #question-container,
 #end-container,
 #high-score-container {
     margin-top: 20px;
 }
 
+/*element containers targeting text*/
 #question-container p,
 #end-container h2,
 #high-score-container h2 {
-    color: #333;
+    color: var(--dpcolor);
 }
 
+/*more element containers*/
 #question-container button,
 #end-container button[type="submit"],
 #high-score-container ol {
     margin-top: 10px;
 }
 
+/*timer*/
 #timer {
     margin-top: 20px;
+    color: var(--dpcolor);
 }
 
 #time {
     font-weight: bold;
 }
 
+/*high-score list*/
+#high-score-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
 #high-score-list li {
     margin-bottom: 10px;
     font-weight: bold;
+    font-size: 20px;
+    color: lightcyan;
+    text-shadow: 1px 1px var(--scolor);
 }
-
